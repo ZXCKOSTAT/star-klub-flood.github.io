@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Star Klub — Реклама</title>
+<style>
+  :root{
+    --bg1:#0f172a; --bg2:#061123;
+    --accent1:#6ee7b7; --accent2:#7c3aed; --accent3:#ffb86b;
+    --glass: rgba(255,255,255,0.06);
+    --glass-2: rgba(255,255,255,0.04);
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;background:radial-gradient(1200px 600px at 10% 10%, rgba(124,58,237,0.15), transparent 6%),
+    radial-gradient(900px 500px at 90% 90%, rgba(110,231,183,0.08), transparent 6%),
+    linear-gradient(180deg,var(--bg1),var(--bg2)); color:#e6eef8; -webkit-font-smoothing:antialiased}
+  .wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:48px;}
+  .card{
+    width:100%;max-width:980px;border-radius:20px;padding:28px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+    box-shadow: 0 8px 30px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+    position:relative; overflow:hidden; backdrop-filter: blur(8px);
+    display:grid; grid-template-columns: 1fr 420px; gap:20px;
+  }
+
+  /* decorative floating blobs */
+  .blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:0.14;transform:translateZ(0);}
+  .blob.a{width:380px;height:380px;left:-80px;top:-120px;background:linear-gradient(135deg,var(--accent2),var(--accent1)); animation:float 9s ease-in-out infinite;}
+  .blob.b{width:260px;height:260px;right:-80px;bottom:-100px;background:linear-gradient(135deg,var(--accent3),#ff6bcb); opacity:0.12; animation:float 11s ease-in-out infinite reverse;}
+
+  @keyframes float{0%{transform:translateY(0) scale(1)}50%{transform:translateY(-18px) scale(1.02)}100%{transform:translateY(0) scale(1)}}
+
+  /* Left content */
+  .left{padding:18px 10px;display:flex;flex-direction:column;gap:18px;justify-content:center}
+  .logo{
+    display:flex;align-items:center;gap:12px;
+    font-weight:700;font-size:20px;letter-spacing:0.6px;
+  }
+  .logo svg{width:48px;height:48px;flex:0 0 auto;filter:drop-shadow(0 6px 18px rgba(124,58,237,0.28));}
+  .title{font-size:34px;font-weight:700;line-height:1; margin-top:4px;}
+  .subtitle{color:rgba(230,238,248,0.78); font-size:15px; margin-top:6px; max-width:520px}
+  .features{display:flex;gap:12px;flex-wrap:wrap;margin-top:6px}
+  .pill{background:var(--glass-2);padding:8px 12px;border-radius:999px;font-size:13px;border:1px solid rgba(255,255,255,0.03)}
+
+  /* typing preview */
+  .preview{
+    margin-top:14px;padding:14px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border:1px solid rgba(255,255,255,0.02); max-width:560px;
+  }
+  .message{
+    display:inline-block;padding:10px 14px;border-radius:12px;background:linear-gradient(90deg, rgba(124,58,237,0.18), rgba(110,231,183,0.08));
+    color:#fff;font-weight:600; box-shadow: 0 8px 20px rgba(12,8,30,0.36); transform-origin:left; animation:popIn 600ms cubic-bezier(.2,.9,.34,1) both;
+  }
+  @keyframes popIn{0%{opacity:0; transform:translateY(10px) scale(.98)}100%{opacity:1; transform:translateY(0) scale(1)}}
+
+  /* Right side mock chat */
+  .right{display:flex;flex-direction:column;gap:12px;align-items:center;justify-content:center;padding:20px}
+  .mock{
+    width:100%;max-width:380px;border-radius:18px;padding:12px;background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
+    border:1px solid rgba(255,255,255,0.03); box-shadow: 0 12px 40px rgba(2,6,23,0.6);
+  }
+  .mock-header{display:flex;align-items:center;justify-content:space-between;padding:8px 6px}
+  .mock-title{display:flex;align-items:center;gap:10px}
+  .mock-title .dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(90deg,var(--accent1),var(--accent2));box-shadow:0 6px 18px rgba(124,58,237,0.26)}
+  .mock-body{padding:10px;display:flex;flex-direction:column;gap:10px;min-height:220px;max-height:300px;overflow:hidden;position:relative}
+
+  .bubble{max-width:78%;padding:10px 12px;border-radius:14px;font-size:14px;line-height:1.25;display:inline-block;opacity:0;transform:translateY(12px)}
+  .bubble.left{background:rgba(255,255,255,0.04);align-self:flex-start;border-top-left-radius:4px}
+  .bubble.right{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#021426;align-self:flex-end;border-top-right-radius:4px}
+  .show{animation:slideIn 420ms cubic-bezier(.2,.9,.34,1) forwards}
+  @keyframes slideIn{to{opacity:1; transform:translateY(0)}}
+
+  /* CTA */
+  .cta{display:flex;gap:12px;align-items:center;margin-top:6px}
+  .btn{
+    position:relative; overflow:visible;
+    background:linear-gradient(90deg,var(--accent1),var(--accent2)); border:none;padding:14px 18px;border-radius:12px;font-weight:700;color:#052027; cursor:pointer; font-size:15px;
+    box-shadow: 0 10px 30px rgba(124,58,237,0.18);
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .btn:active{transform:translateY(2px)}
+  .btn .pulse{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:120%;height:120%;border-radius:14px;filter:blur(18px);opacity:0.18; animation:pulse 2.4s infinite}
+  @keyframes pulse{0%{transform:translate(-50%,-50%) scale(.9);opacity:.18}50%{transform:translate(-50%,-50%) scale(1.08);opacity:.12}100%{transform:translate(-50%,-50%) scale(.9);opacity:.18}}
+
+  .ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:12px 14px;border-radius:12px;font-size:14px;color:rgba(230,238,248,0.88);cursor:pointer}
+
+  /* shimmer tagline */
+  .shine{background:linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.18), rgba(255,255,255,0.06)); background-size:200% 100%;
+    -webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 3.2s linear infinite}
+  @keyframes shimmer{0%{background-position:0 0}100%{background-position:-200% 0}}
+
+  /* responsive */
+  @media (max-width:880px){
+    .card{grid-template-columns:1fr; padding:20px}
+    .right{order:-1}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card" role="region" aria-label="Реклама Star Klub">
+    <div class="blob a" aria-hidden="true"></div>
+    <div class="blob b" aria-hidden="true"></div>
+
+    <div class="left">
+      <div class="logo">
+        <!-- star logo -->
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#7c3aed"/><stop offset="1" stop-color="#6ee7b7"/></linearGradient>
+          </defs>
+          <path d="M12 2.5l2.8 5.68 6.26.92-4.53 4.42 1.07 6.24L12 17.77 6.42 19.76l1.07-6.24L3 9.1l6.26-.92L12 2.5z" fill="url(#g1)"/>
+        </svg>
+        <div>
+          <div style="font-size:13px;opacity:.9">STAR KLUB</div>
+          <div style="font-size:11px;color:rgba(230,238,248,0.65);margin-top:2px">chat • friends • events</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="title">Лучший флуд — <span class="shine">Star Klub</span></div>
+        <div class="subtitle">Заходи к нам в флуд не пожалеешь.</div>
+      </div>
+
+      <div class="features" aria-hidden="true">
+        <div class="pill">юзы админов </div>
+        <div class="pill">@KW4RTY2 владелец</div>
+        <div class="pill">@Vilkarezet совлд</div>
+        <div class="pill">@gdhdjdj3 главный админ</div>
+      </div>
+
+      <div class="preview" aria-live="polite">
+        <div class="message" id="typingPreview">Здраствуй Сударь! 👋</div>
+      </div>
+     <div class="cta">
+        <button class="btn" id="joinBtn" aria-label="Присоединиться в Star Klub">
+          <span class="pulse" aria-hidden="true"></span>
+          Вступить в Star Klub
+        </button>
+        <button class="ghost" id="learnBtn">Узнать больше</button>
+      </div>
+    </div>
+
+    <div class="right">
+      <div class="mock" role="dialog" aria-label="Превью чата">
+        <div class="mock-header">
+          <div class="mock-title">
+            <div class="dot" aria-hidden="true"></div>
+            <div>
+              <div style="font-weight:700">#general</div>
+              <div style="font-size:12px;color:rgba(230,238,248,0.6)">12 участников · онлайн</div>
+            </div>
+          </div>
+          <div style="font-size:12px;color:rgba(230,238,248,0.6)">Live • ✨</div>
+        </div>
+
+        <div class="mock-body" id="mockBody">
+          <div class="bubble left" style="opacity:1;transform:none">Заходи к нам</div>
+          <div class="bubble right">Я уже там✨</div>
+          <div class="bubble left">мы ждем всех вас</div>
+          <!-- new messages will be injected -->
+        </div>
+      </div>
+
+      <div style="display:flex;gap:10px;align-items:center;margin-top:8px">
+        <div style="font-size:13px;color:rgba(230,238,248,0.65)">Популярные теги:</div>
+        <div class="pill">#флуд</div>
+        <div class="pill">#ролка</div>
+        <div class="pill">#заходи</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Typing preview messages
+  const previewEl = document.getElementById('typingPreview');
+  const msgs = [
+    "Привет! 👋 Добро пожаловать в Star Klub.",
+    "Лучший флуд по всем фд .",
+    "Нажми «Вступить» — и переходи по ссылке!"
+  ];
+  let pi=0, charIdx=0;
+  function typeLoop(){
+    const text = msgs[pi];
+    if(charIdx <= text.length){
+      previewEl.textContent = text.slice(0,charIdx++);
+      setTimeout(typeLoop, 32 + Math.random()*50);
+    } else {
+      setTimeout(()=>{charIdx=0; pi=(pi+1)%msgs.length; typeLoop()}, 1200 + Math.random()*1000);
+    }
+  }
+  typeLoop();
+
+  // Mock chat incoming messages
+  const mockBody = document.getElementById('mockBody');
+  const incoming = [
+    {side:'right', text:'Не можешь найти комфортный  флуд '},
+    {side:'left', text:'Да не могу.'},
+    {side:'right', text:'Ну тогда заходи в star klub'},
+    {side:'left', text:'Вау спасибо'}
+  ];
+  let im=0;
+  function pushMock(){
+    if(im >= incoming.length) return;
+    const obj = incoming[im++];
+    const el = document.createElement('div');
+    el.className = 'bubble ' + obj.side;
+    el.textContent = obj.text;
+    mockBody.appendChild(el);
+    // small delay then show
+    requestAnimationFrame(()=>setTimeout(()=>el.classList.add('show'), 40));
+    // scroll
+    mockBody.scrollTop = mockBody.scrollHeight;
+    setTimeout(pushMock, 1300 + Math.random()*1200);
+  }
+  setTimeout(pushMock, 700);
+
+  // Button interactions
+  const joinBtn = document.getElementById('joinBtn');
+  joinBtn.addEventListener('click', ()=> {
+    // quick confetti canvas
+    runConfetti();
+    // micro-feedback
+    joinBtn.innerHTML = '<span class="pulse" aria-hidden="true"></span> https://t.me/star_club13';
+    joinBtn.style.pointerEvents = 'none';
+  });
+
+  document.getElementById('learnBtn').addEventListener('click', ()=>{
+    // reveal a temporary bubble in preview
+    const sneak = document.createElement('div');
+    sneak.className = 'message';
+    sneak.style.marginTop = '10px';
+    sneak.textContent = 'Подробнее в профиле →';
+    document.querySelector('.preview').appendChild(sneak);
+    setTimeout(()=>sneak.style.opacity=0.2,2200);
+    setTimeout(()=>sneak.remove(),3400);
+  });
+
+  // lightweight confetti 
+  function runConfetti(){
+    const c = document.createElement('canvas');
+    c.style.position='fixed'; c.style.left='0'; c.style.top='0'; c.style.width='100%'; c.style.height='100%';
+    c.width = innerWidth; c.height = innerHeight; c.style.pointerEvents='none'; document.body.appendChild(c);
+    const ctx = c.getContext('2d');
+    const pieces = [];
+    for(let i=0;i<80;i++){
+      pieces.push({
+        x: Math.random()*c.width,
+        y: -20 - Math.random()*c.height*0.2,
+        r: 6 + Math.random()*8,
+        s: 1 + Math.random()*1.8,
+        a: Math.random()*Math.PI*2,
+        c: ['#7c3aed','#6ee7b7','#ffb86b','#ff6bcb'][Math.floor(Math.random()*4)],
+        vx: (Math.random()-0.5)*2,
+        vy: 2 + Math.random()*3,
+        rot: Math.random()*360
+      });
+    }
+    let t=0;
+    function frame(){
+      ctx.clearRect(0,0,c.width,c.height);
+      for(const p of pieces){
+        p.x += p.vx * p.s;
+        p.y += p.vy * p.s + Math.sin((t+p.x)*0.01)*0.3;
+        p.rot += p.vx*2;
+        ctx.save();
+        ctx.translate(p.x,p.y);
+        ctx.rotate(p.rot*0.01745);
+        ctx.fillStyle = p.c;
+        ctx.fillRect(-p.r/2,-p.r/2,p.r,p.r*0.6);
+        ctx.restore();
+      }
+      t++;
+      if(t<160) requestAnimationFrame(frame); else c.remove();
+    }
+    frame();
+  }
+
+  // accessibility: reduce motion respect
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(prefersReduced){
+    document.querySelectorAll('.blob, .pulse, .shine, .message, .bubble').forEach(el=>el.style.animation='none');
+  }
+</script>
+</body>
+</html>
+      
